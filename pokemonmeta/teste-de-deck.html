@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>𝘿𝙚𝙘𝙠 𝘽𝙪𝙞𝙡𝙙𝙚𝙧</title>
+    <link rel="shortcut icon" href="Design-sem-nome.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #3c0f38;
+            background-image: "fundo-galaxia.jpeg";
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+
+        }
+
+        .navbar {
+            background-color: #00326b;
+            color: #5be6ff;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 2rem;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            margin-right: 1.5rem;
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+            padding: 1rem 0;
+            display: block;
+        }
+
+        .navbar ul li a:hover {
+            color: rgb(229, 255, 0);
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .search {
+            margin-bottom: 10px;
+        }
+
+        .card-list,
+        .deck-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #6d1b67;
+            padding: 10px;
+            border-radius: 8px;
+            min-height: 400px;
+            max-height: 700px;
+            max-width: 800px;
+        }
+
+        .card {
+            background: #4b50ad;
+            padding: 10px;
+            border-radius: 6px;
+            width: 120px;
+            text-align: center;
+            position: relative;
+            color: yellow;
+            font-display: auto;
+            font-size: larger;
+            max-height: 270px;
+
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .card-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 5px;
+        }
+
+        .card button {
+            padding: 4px 6px;
+            font-size: 14px;
+            background: #a9488f;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            color: #36093a;
+        }
+
+        .card button:hover {
+            background: #f5f5f5;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .scroll-container {
+            overflow-x: hidden;
+            overflow-y: scroll;
+            direction: ltr;
+            /* inverte a direção */
+            border: 1px solid #ccc;
+            transform: scaleX(+1);
+            /* inverte verticalmente a div */
+            width: 775px;
+            border-radius: 8px;
+
+        }
+
+        .scroll-content {
+            width: 800px;
+            height: 500px;
+            transform: scaleX(+1);
+            /* re-inverte o conteúdo para aparecer normal */
+            direction: ltr;
+            /* volta direção para o normal */
+        }
+
+        input{
+            border-radius: 5px;
+            min-width: 20px;
+            min-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img src="imagemdepokemoncards/Image.png" width="70" height="70"> </div>
+        </nav>
+    </header>
+    <!--Barra de cima-->
+    <div class="container">
+        <!--lista das cartas que estão disponíveis-->
+        <h4>Cartas disponíveis</h4>
+
+
+        <input type="text" id="search" class="search" placeholder="Buscar carta...">
+        <div class="scroll-container">
+            <div class="scroll-content">
+                <div class="card-list" id="cardList"></div>
+            </div>
+        </div>
+    </div>
+    <!--lista das cartas adicionadas ao deck-->
+    <div class="container">
+        <h4>Deck Atual (<span id="deckCount">0</span> cartas)</h4>
+        <div class="deck-list" id="deckList"></div>
+    </div>
+    <!--cartas que aparecem disponíveis na lista-->
+    <script>
+        const cards = [
+            { name: "Pesquisa De Professores", image: "https://s3.duellinksmeta.com/pkm_img/cards/672181b7c08874f5ab2e1700_w360.webp" },
+            { name: "Poké Ball", image: "https://s3.duellinksmeta.com/pkm_img/cards/672181a6c08874f5ab2e16f0_w360.webp" },
+            { name: "Cyrus", image: "https://s3.duellinksmeta.com/pkm_img/cards/6798ea0c6950657553dc675d_w260.webp" },
+            { name: "Marte", image: "https://s3.duellinksmeta.com/pkm_img/cards/6799bdfaf06a47c6afdf7d92_w260.webp" },
+            { name: "Capa gigante", image: "" },
+            { name: "Red", image: "" },
+            { name: "Doce Raro", image: "" },
+            { name: "Giratina EX", image: "" },
+            { name: "Repelente", image: "https://s3.duellinksmeta.com/pkm_img/cards/6837fdf626d19a35a27b4b8b_w260.webp" },
+            { name: "Leaf", image: "" },
+            { name: "Guzma", image: "" },
+            { name: "Cartão Vermelho", image: "" },
+            { name: "Sabrina", image: "" },
+            { name: "Irida", image: "" },
+            { name: "Suicune EX", image: "" },
+            { name: "Rocky Helmet", image: "" },
+            { name: "Froakie", image: "" },
+            { name: "Greninja", image: "" },
+            { name: "Moça Do Centro Pokémon", image: "https://s3.duellinksmeta.com/pkm_img/cards/67e395a2575eceb838a249c9_w260.webp" },
+            { name: "Poção", image: "" },
+            { name: "Darkrai", image: "" },
+            { name: "Oricorio", image: "" },
+            { name: "Lusamine", image: "" },
+            { name: "Eevee", image: "" },
+            { name: "Celesteela", image: "" },
+            { name: "Pichu", image: "" },
+            { name: "Sylveon", image: "" },
+            { name: "Silver", image: "" },
+            { name: "Mochila De Eevee", image: "" },
+            { name: " Eevee EX", image: "" },
+            { name: "Guzzlord EX", image: "" },
+            { name: "Giovanni", image: "" },
+            { name: "Troca Elemental", image: "" },
+            { name: "Will", image: "" },
+            { name: "Zeraora", image: "" },
+            { name: "Magby", image: "" },
+            { name: "Velocidade X", image: "" },
+            { name: "Mantyne", image: "" },
+            { name: "Arceus EX", image: "" },
+            { name: "Comunicação Pokémon", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+            { name: "", image: "" },
+        ];
+
+        const deck = {};
+
+        const cardList = document.getElementById('cardList');
+        const deckList = document.getElementById('deckList');
+        const deckCount = document.getElementById('deckCount');
+        const searchInput = document.getElementById('search');
+
+        function renderCards(filter = "") {
+            cardList.innerHTML = '';
+            const filteredCards = cards.filter(card => card.name.toLowerCase().includes(filter.toLowerCase()));
+            filteredCards.forEach(card => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+          <img src="${card.image}" alt="${card.name}">
+          <div>${card.name}</div>
+          <div class="card-buttons">
+            <button onclick="addToDeck('${card.name}')">+</button>
+          </div>
+        `;
+                cardList.appendChild(div);
+            });
+        }
+
+        function renderDeck() {
+            deckList.innerHTML = '';
+            let total = 0;
+            for (let name in deck) {
+                total += deck[name].count;
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+          <img src="${deck[name].image}" alt="${name}">
+          <div>${name} (${deck[name].count})</div>
+          <div class="card-buttons">
+            <button onclick="addToDeck('${name}')">+</button>
+            <button onclick="removeFromDeck('${name}')">-</button>
+          </div>
+        `;
+                deckList.appendChild(div);
+            }
+            deckCount.textContent = total;
+        }
+
+        function addToDeck(name) {
+            const card = cards.find(c => c.name === name);
+            if (!deck[name]) {
+                deck[name] = { ...card, count: 0 };
+            }
+            deck[name].count++;
+            renderDeck();
+        }
+
+        function removeFromDeck(name) {
+            if (deck[name]) {
+                deck[name].count--;
+                if (deck[name].count <= 0) {
+                    delete deck[name];
+                }
+                renderDeck();
+            }
+        }
+
+        searchInput.addEventListener("input", (e) => {
+            renderCards(e.target.value);
+        });
+
+        renderCards();
+    </script>
+
+</body>
+
+</html>
