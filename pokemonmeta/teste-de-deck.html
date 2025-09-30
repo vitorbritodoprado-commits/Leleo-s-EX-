@@ -126,7 +126,7 @@
             overflow-y: scroll;
             direction: ltr;
             /* inverte a direção */
-            border: 1px solid #ccc;
+            border: 1px solid #7d2cc0;
             transform: scaleX(+1);
             /* inverte verticalmente a div */
             width: 775px;
@@ -136,14 +136,14 @@
 
         .scroll-content {
             width: 800px;
-            height: 500px;
+            height: 400px;
             transform: scaleX(+1);
             /* re-inverte o conteúdo para aparecer normal */
             direction: ltr;
             /* volta direção para o normal */
         }
 
-        input{
+        input {
             border-radius: 5px;
             min-width: 20px;
             min-height: 30px;
@@ -173,8 +173,14 @@
     <!--lista das cartas adicionadas ao deck-->
     <div class="container">
         <h4>Deck Atual (<span id="deckCount">0</span> cartas)</h4>
-        <div class="deck-list" id="deckList"></div>
+        <div class="scroll-container">
+            <div class="scroll-content">
+                <div class="deck-list" id="deckList">
+                </div>
+            </div>
+        </div>
     </div>
+
     <!--cartas que aparecem disponíveis na lista-->
     <script>
         const cards = [
